@@ -14,7 +14,7 @@
 
 O **Projeto** é uma cópia do OLX com o desafio de criar todas suas funcionalidades tanto no frontend como no backend, feito para treinar habilidades **fullstack**.
 
-Baseado no [projeto original de matheuspdias](https://github.com/matheuspdias/olx), com o frontend redesenhado pra acompanhar o layout atual da OLX (busca integrada, categorias, carrossel, avaliações de vendedor) e o modelo de dados do backend estendido (verificação de vendedor, avaliações, histórico de vendas, galeria de fotos).
+Frontend redesenhado pra acompanhar o layout atual da OLX (busca integrada, categorias, carrossel, avaliações de vendedor) e modelo de dados do backend estendido (verificação de vendedor, avaliações, histórico de vendas, galeria de fotos).
 
 ## :rocket: Tecnologias
 -  [Laravel](https://laravel.com/)
