@@ -34,22 +34,6 @@ export const HeaderLeft = styled.div`
     }
 `;
 
-export const MenuButton = styled.button`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    color: #4A4A4A;
-    cursor: pointer;
-    margin-right: 20px;
-    padding: 4px;
-
-    :hover {
-        color: #6e0ad6;
-    }
-`;
-
 export const Logo = styled.img`
     width: 50px;
     margin-right: 50px;

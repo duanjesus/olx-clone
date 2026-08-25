@@ -6,14 +6,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import Logo from '../../assets/logoolx.png';
 import Api from '../../api';
 
-const MenuIcon = () => (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-        <line x1="3" y1="6" x2="21" y2="6" />
-        <line x1="3" y1="12" x2="21" y2="12" />
-        <line x1="3" y1="18" x2="21" y2="18" />
-    </svg>
-);
-
 const SearchIcon = () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
         <circle cx="11" cy="11" r="7" />
@@ -94,7 +86,6 @@ export default ({logged}) => {
         <S.Wrapper>
             <S.TopBar>
                 <S.HeaderLeft>
-                    <S.MenuButton type="button" aria-label="Menu"><MenuIcon /></S.MenuButton>
                     <Link to="/">
                         <S.Logo src={Logo} />
                     </Link>

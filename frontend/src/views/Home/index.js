@@ -142,9 +142,7 @@ export default () => {
                     {categories && categories.map((item, key) => (
                         <Link to="/" key={key}>
                             <S.CategoryNavItem>
-                                <S.CategoryNavIconBadge $index={key}>
-                                    <S.CategoryNavIcon src={item.covercategory} />
-                                </S.CategoryNavIconBadge>
+                                <S.CategoryNavIcon src={item.covercategory} />
                                 {item.name}
                             </S.CategoryNavItem>
                         </Link>

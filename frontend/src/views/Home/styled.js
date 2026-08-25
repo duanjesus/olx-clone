@@ -60,23 +60,11 @@ export const CategoryNavItem = styled.span`
     }
 `;
 
-const badgeColors = ['#E8F5EE', '#FDEAEE', '#F1EAFB', '#EAF6FB', '#FDF3E7', '#EAFBF2', '#FBEAF7', '#EFEAFB', '#FDF7E7'];
-
-export const CategoryNavIconBadge = styled.span`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: ${props => badgeColors[props.$index % badgeColors.length]};
-    flex-shrink: 0;
-`;
-
 export const CategoryNavIcon = styled.img`
-    width: 15px;
-    height: 15px;
+    width: 18px;
+    height: 18px;
     object-fit: contain;
+    flex-shrink: 0;
 `;
 
 export const CategoryNavScrollButton = styled.button`
