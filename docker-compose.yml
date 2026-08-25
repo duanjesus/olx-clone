@@ -1,0 +1,93 @@
+version: "3.8"
+
+services:
+  db:
+    image: mariadb:10.4
+    restart: unless-stopped
+    # skip-name-resolve: without it, mariadb does a reverse DNS lookup on
+    # every new connection before it even checks credentials, which was
+    # adding real per-request latency for a purely local dev database.
+    command: ["--skip-name-resolve"]
+    environment:
+      MYSQL_DATABASE: olxlaravel
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - olx_db_data:/var/lib/mysql
+      - ./olxapi.sql:/docker-entrypoint-initdb.d/olxapi.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+      # vendor/ has ~10k small PHP files; reading them through the Windows
+      # bind mount on every request (opcache still has to stat each one)
+      # was the biggest single contributor to page load time. Keeping it in
+      # a named volume puts it on the container's native filesystem instead.
+      - olx_api_vendor:/var/www/vendor
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: olxlaravel
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      sh -c "
+        [ -f .env ] || cp .env.example .env &&
+        [ -f vendor/autoload.php ] || composer install --no-interaction --no-scripts &&
+        sed -i 's/^DB_HOST=.*/DB_HOST=db/' .env &&
+        sed -i 's/^DB_DATABASE=.*/DB_DATABASE=olxlaravel/' .env &&
+        sed -i 's/^DB_USERNAME=.*/DB_USERNAME=root/' .env &&
+        sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=root/' .env &&
+        grep -q '^APP_KEY=base64' .env || php artisan key:generate --ansi &&
+        php artisan vendor:publish --provider='Tymon\\JWTAuth\\Providers\\LaravelServiceProvider' --force &&
+        grep -q '^JWT_SECRET=.' .env || php artisan jwt:secret --force &&
+        php artisan migrate --force &&
+        php artisan db:seed --class=DemoProfileSeeder --force &&
+        php artisan serve --host=0.0.0.0 --port=8000
+      "
+
+  web:
+    image: node:16
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - olx_web_node_modules:/app/node_modules
+    ports:
+      - "5187:3000"
+    environment:
+      PORT: 3000
+      HOST: 0.0.0.0
+      BROWSER: none
+      WDS_SOCKET_PORT: "5187"
+      CHOKIDAR_USEPOLLING: "true"
+      CHOKIDAR_INTERVAL: "1000"
+    depends_on:
+      - api
+    command: >
+      sh -c "
+        [ -d node_modules/react-scripts ] || npm install --legacy-peer-deps &&
+        npm start
+      "
+
+volumes:
+  olx_db_data:
+  olx_web_node_modules:
+  olx_api_vendor:
