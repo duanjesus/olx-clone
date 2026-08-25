@@ -12,66 +12,58 @@
 
 ## :bookmark: Sobre
 
-O **Projeto** é uma copia do OLX com o desafio de criar todas suas funcionalidades tanto no frontend como no backend, foi feito apenas para treinar habilidades **fullstack**.
-  
+O **Projeto** é uma cópia do OLX com o desafio de criar todas suas funcionalidades tanto no frontend como no backend, feito para treinar habilidades **fullstack**.
 
+Baseado no [projeto original de matheuspdias](https://github.com/matheuspdias/olx), com o frontend redesenhado pra acompanhar o layout atual da OLX (busca integrada, categorias, carrossel, avaliações de vendedor) e o modelo de dados do backend estendido (verificação de vendedor, avaliações, histórico de vendas, galeria de fotos).
 
 ## :rocket: Tecnologias
 -  [Laravel](https://laravel.com/)
 -  [ReactJS](https://reactjs.org/)
 -  [React Native](http://facebook.github.io/react-native/)
 -  [axios](https://github.com/axios/axios)
+-  [Docker](https://www.docker.com/) / Docker Compose (ambiente de desenvolvimento)
+-  MariaDB
 
 ## :boom: Como Executar
 
 - ### **Pré-requisitos**
 
-  - É **necessário** possuir o **[Laravel](https://laravel.com/)** instalado no computador
-  - É **necessário** possuir o **[Git](https://git-scm.com/)** instalado e configurado no computador
-  - Também, é **preciso** ter um gerenciador de pacotes seja o **[NPM](https://www.npmjs.com/)** ou **[Yarn](https://yarnpkg.com/)**.
+  - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** instalado e em execução
+  - **[Git](https://git-scm.com/)** instalado
 
-1. Faça um clone do repositório:
+1. Clone o repositório:
 
 ```sh
-  $ git clone https://github.com/matheuspdias/olx.git
+git clone https://github.com/duanjesus/olx-clone.git
+cd olx-clone
 ```
 
-2. Executando a Aplicação:
+2. Suba os containers (API Laravel + MariaDB + frontend React):
 
 ```sh
-  # IMPORTE O ARQUIVO OLXAPI.SQL PARA SUA MAQUINA PELO PHPMYADMIN
-  # API
-  $ cd olx
-  $ cd backend
-  # Instalando as dependências do projeto.
-  $ composer install --no-scripts
-  # renomeio o arquivo env.example para .env
-  $ no arquivo .env use DB_DATABASE=olxlaravel ou o nome que você colocou no db
-  # Gere uma nova chave para a aplicação laravel:
-  $ php artisan key:generate
-  # Publicar configuração de JWT
-  $ php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
-  $ depois execute php artisan jwt:secret
-  # Inicie a API
-  $ php artisan serve --host=0.0.0.0
+docker compose up -d --build
+```
 
-  # Aplicação web
-  $ cd olx
-  $ cd frontend
-  # Instalando as dependências do projeto.
-  $ yarn ou npm install
-  # configurando arquivo api.js
-  $ troque o baseURL: para 'http://ipdasuamaquina:8000/api'
-  # Inicie a aplicação web
-  $ yarn start ou npm start
+Isso instala as dependências (composer e npm), roda as migrations e o seeder de dados de demonstração automaticamente. Na primeira vez pode levar alguns minutos.
 
-  # Aplicação mobile
-  $ cd olx
-  $ cd mobile
-  # Instalando as dependências do projeto.
-  $ yarn ou npm install
-  # configurando arquivo api.js
-  $ troque o baseURL: para 'http://ipdasuamaquina:8000/api'
-  # Inicie a aplicação mobile
-  $ npx react-native run-android
+3. Acesse:
+
+- **Frontend**: http://localhost:5187
+- **API**: http://localhost:8000/api
+
+Para derrubar o ambiente:
+
+```sh
+docker compose down
+```
+
+### Aplicação mobile
+
+O app mobile (React Native) não faz parte do ambiente Docker. Para rodá-lo:
+
+```sh
+cd mobile
+yarn ou npm install
+# em src/api.js, troque o baseURL para 'http://ipdasuamaquina:8000/api'
+npx react-native run-android
 ```
