@@ -54,14 +54,14 @@ export default () => {
         <S.HeaderArea>
             <Header />
         </S.HeaderArea>
-        <S.Breadcrumb className="container">
+        <S.Breadcrumb>
             <Link to="/">{announcement.city || 'OLX'}</Link>
             {announcement.category_name && <>
                 <S.BreadcrumbSeparator>›</S.BreadcrumbSeparator>
                 <Link to="/">{announcement.category_name}</Link>
             </>}
         </S.Breadcrumb>
-        <S.Container className="container">
+        <S.Container>
             <S.AnnouncementArea className="col-md-8">
                 <S.TitleRow>
                     <S.TitleAnnouncement>{announcement.title}</S.TitleAnnouncement>

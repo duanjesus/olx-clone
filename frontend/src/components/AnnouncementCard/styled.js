@@ -2,22 +2,20 @@ import styled from 'styled-components';
 
 
 export const Announcement = styled.div`
-    width: 240px;
-    height: 240px;
+    width: 100%;
     display: flex;
     flex-direction:column;
-    margin-right: 30px;
 `;
 
 export const ImageArea = styled.div`
     position: relative;
     width: 100%;
-    height: 150px;
+    height: 220px;
 `;
 
 export const ImageAnnouncement = styled.img`
     width:100%;
-    height: 150px;
+    height: 220px;
     border-radius: 10px;
     object-fit: cover;
 `;
@@ -44,16 +42,20 @@ export const FavoriteButton = styled.button`
 `;
 
 export const DescriptionAnnouncement = styled.small`
-    margin-top: 5px;
-    color: #4a4a4a;
-    font-size: 14px;
-    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 12px;
+    color: #1A1D23;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 `;
 
 export const PriceAnnouncement = styled.small`
-    margin-top: 5px;
-    color: rgb(74, 74, 74);
-    font-size: 16px;
-    font-weight: 700;
-    font-family: Arial, Helvetica, sans-serif
+    margin-top: 8px;
+    color: #1A1D23;
+    font-size: 18px;
+    font-weight: 600;
 `;

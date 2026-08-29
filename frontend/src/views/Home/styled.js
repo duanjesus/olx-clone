@@ -14,14 +14,14 @@ export const CategoryNavInner = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-    max-width: 1400px;
+    max-width: 1600px;
     padding: 0 24px;
 `;
 
 export const CategoryNavScroll = styled.div`
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 24px;
     flex: 1;
     min-width: 0;
     padding: 16px 0;
@@ -40,11 +40,11 @@ export const CategoryNavScroll = styled.div`
 export const CategoryNavItem = styled.span`
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     flex-shrink: 0;
     white-space: nowrap;
-    font-size: 14px;
-    color: #4A4A4A;
+    font-size: 16px;
+    color: ${props => props.$active ? '#1A1D23' : '#5E6A82'};
     font-weight: ${props => props.$active ? '700' : '500'};
     padding-bottom: ${props => props.$active ? '13px' : '0'};
     border-bottom: ${props => props.$active ? '2px solid #6e0ad6' : 'none'};
@@ -61,8 +61,8 @@ export const CategoryNavItem = styled.span`
 `;
 
 export const CategoryNavIcon = styled.img`
-    width: 18px;
-    height: 18px;
+    width: 32px;
+    height: 32px;
     object-fit: contain;
     flex-shrink: 0;
 `;
@@ -88,7 +88,10 @@ export const CategoryNavScrollButton = styled.button`
 `;
 
 export const PromoArea = styled.div`
-    margin-top: 24px;
+    width: 100%;
+    max-width: 1600px;
+    margin: 24px auto 0;
+    padding: 0 24px;
 `;
 
 export const PromoCarousel = styled.div`
@@ -189,24 +192,25 @@ export const PromoDot = styled.button`
 `;
 
 export const Announcements = styled.section`
-    margin-top: 20px;
+    width: 100%;
+    max-width: 1600px;
+    margin: 24px auto 40px;
+    padding: 0 24px;
     display: flex;
     flex-direction: column;
-    flex: 1;
 `;
 
 export const Title = styled.span`
-    color: rgb(74, 74, 74);
-    font-size: 20px;
+    color: #1A1D23;
+    font-size: 22px;
     font-weight: 600;
 `;
 
 export const AnnouncementsArea = styled.div`
-   display: flex;
-   flex: 1;
-   flex-direction: row;
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+   gap: 24px;
    margin-top: 20px;
-   flex-wrap: wrap;
 
    a {
        text-decoration: none;

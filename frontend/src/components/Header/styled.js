@@ -12,8 +12,8 @@ export const TopBar = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 1400px;
-    height: 80px;
+    max-width: 1600px;
+    height: 82px;
     padding: 0 24px;
 `;
 
@@ -25,7 +25,7 @@ export const HeaderLeft = styled.div`
 
     a {
         text-decoration: none;
-        color: #4A4A4A;
+        color: #1A1D23;
         transition: all ease 0.2s;
     }
 
@@ -35,8 +35,9 @@ export const HeaderLeft = styled.div`
 `;
 
 export const Logo = styled.img`
-    width: 50px;
-    margin-right: 50px;
+    height: 44px;
+    width: auto;
+    margin-right: 40px;
 `;
 
 export const HeaderRight = styled.div`
@@ -48,7 +49,7 @@ export const HeaderRight = styled.div`
     margin-left: 24px;
 
     a {
-        color: rgb(74, 74, 74);
+        color: #1A1D23;
         font-size: 14px;
         font-weight: 600;
         text-decoration: none;
@@ -91,11 +92,11 @@ export const ButtonOutline = styled.span`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
-    padding: 0 24px;
-    border-radius: 40px;
-    border: 1px solid #d8d8d8;
-    color: #4A4A4A;
+    height: 48px;
+    padding: 0 28px;
+    border-radius: 32px;
+    border: 1px solid #CFD4DD;
+    color: #1A1D23;
     font-size: 14px;
     font-weight: 600;
     background: transparent;
@@ -127,14 +128,14 @@ export const ButtonAdd = styled.div`
     align-items: center;
     justify-content: center;
     gap: 6px;
-    height: 40px;
-    padding: 0 20px;
+    height: 48px;
+    padding: 0 24px;
     color: #fff;
     font-size: 14px;
     border: 1px solid transparent;
     text-decoration: none;
     background-color: #6e0ad6;
-    border-radius: 40px;
+    border-radius: 32px;
     font-weight: bold;
     white-space: nowrap;
 `;
@@ -150,9 +151,9 @@ export const SearchWrapper = styled.div`
     align-items: center;
     flex: 1;
     min-width: 0;
-    max-width: 620px;
-    height: 44px;
-    border: 1px solid #d8d8d8;
+    max-width: 680px;
+    height: 48px;
+    border: 1px solid #CFD4DD;
     border-radius: 6px;
     overflow: hidden;
 `;
@@ -164,9 +165,9 @@ export const SearchInput = styled.input`
     border: none;
     outline: none;
     background: #f5f5f5;
-    padding: 0 16px;
-    font-size: 15px;
-    color: #4A4A4A;
+    padding: 0 18px;
+    font-size: 16px;
+    color: #1A1D23;
 
     ::placeholder {
         color: #767676;
@@ -186,10 +187,10 @@ export const LocationButton = styled.button`
     gap: 6px;
     flex-shrink: 0;
     height: 100%;
-    padding: 0 14px;
+    padding: 0 16px;
     border: none;
     background: transparent;
-    color: #4A4A4A;
+    color: #1A1D23;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -209,7 +210,7 @@ export const SearchSubmit = styled.button`
     height: 100%;
     background: transparent;
     border: none;
-    color: #4A4A4A;
+    color: #1A1D23;
     cursor: pointer;
 
     :hover {

@@ -7,13 +7,13 @@ import Header from '../../components/Header';
 import AnnouncementCard from '../../components/AnnouncementCard';
 
 const HeartIcon = () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="#F02C56">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="#F02C56">
         <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" />
     </svg>
 );
 
 const PercentIcon = () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00A650" strokeWidth="2" strokeLinecap="round">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00A650" strokeWidth="2" strokeLinecap="round">
         <line x1="19" y1="5" x2="5" y2="19" />
         <circle cx="6.5" cy="6.5" r="2.5" />
         <circle cx="17.5" cy="17.5" r="2.5" />
@@ -21,7 +21,7 @@ const PercentIcon = () => (
 );
 
 const GridIcon = () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="#8B2FE8">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="#8B2FE8">
         <circle cx="6" cy="6" r="3.2" />
         <circle cx="18" cy="6" r="3.2" />
         <circle cx="6" cy="18" r="3.2" />
@@ -30,7 +30,7 @@ const GridIcon = () => (
 );
 
 const BagIcon = () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F78323" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F78323" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M6 8h12l-1 12H7L6 8Z" />
         <path d="M9 8V6a3 3 0 0 1 6 0v2" />
     </svg>
@@ -154,7 +154,7 @@ export default () => {
             </S.CategoryNavInner>
         </S.CategoryNavArea>
 
-        <S.PromoArea className="container">
+        <S.PromoArea>
             <S.PromoCarousel>
                 <S.PromoArrow type="button" onClick={() => goToSlide(slideIndex - 1)} aria-label="Anterior">
                     <ChevronLeftIcon />
@@ -180,7 +180,7 @@ export default () => {
             </S.PromoCarousel>
         </S.PromoArea>
 
-        <S.Announcements className="container">
+        <S.Announcements>
                 <S.Title>Anúncios recentes</S.Title>
 
 

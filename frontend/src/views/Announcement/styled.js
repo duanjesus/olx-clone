@@ -5,7 +5,10 @@ export const HeaderArea = styled.div``;
 export const Breadcrumb = styled.div`
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto 20px;
+    padding: 0 24px;
     font-size: 13px;
 
     a {
@@ -28,7 +31,10 @@ export const Container = styled.section`
     flex-direction: row;
     flex-wrap: wrap;
     gap: 24px;
-    padding-bottom: 60px;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
 
     @media (max-width: 768px) {
         flex-direction: column;
