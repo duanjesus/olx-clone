@@ -19,7 +19,7 @@ class CategoryController extends Controller
     public function getCategories() {
         $array = ['error'];
 
-        $categories = Category::all();
+        $categories = Category::orderBy('sort_order')->get();
 
         foreach($categories as $ckey => $cvalue ) {
             $categories[$ckey]['covercategory'] = url('media/covercategory/'.$categories[$ckey]['covercategory']);

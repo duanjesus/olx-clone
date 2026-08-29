@@ -50,6 +50,7 @@ export const HeaderRight = styled.div`
     a {
         color: rgb(74, 74, 74);
         font-size: 14px;
+        font-weight: 600;
         text-decoration: none;
         transition: all ease 0.2s;
     }
