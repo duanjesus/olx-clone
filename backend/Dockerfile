@@ -1,6 +1,8 @@
 FROM php:7.4-cli
 
-RUN apt-get update && apt-get install -y \
+RUN rm -f /etc/apt/sources.list.d/* \
+    && echo 'deb http://archive.debian.org/debian bullseye main' > /etc/apt/sources.list \
+    && apt-get -o Acquire::Check-Valid-Until=false update && apt-get install -y \
     git unzip libzip-dev libpng-dev libonig-dev libxml2-dev \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip xml opcache \
     && rm -rf /var/lib/apt/lists/*
