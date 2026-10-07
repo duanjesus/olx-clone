@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as S from './styled';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Api from '../../api';
 
 import Header from '../../components/Header';
@@ -79,32 +80,54 @@ export default () => {
 
     const [categories, setCategories] = useState([]);
     const [announcements, setAnnouncements] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [loadError, setLoadError] = useState(false);
+    const token = useSelector(state => state.UserReducer.token);
+    const params = new URLSearchParams(useLocation().search);
+    const query = (params.get('q') || '').trim();
+    const mine = params.get('meus') === '1' && !!token;
     const [slideIndex, setSlideIndex] = useState(0);
     const scrollRef = useRef(null);
 
-    const getCategories = async () => {
-        setCategories([]);
-
-        await Api.get('/categories').then((res) => {
-            setCategories(res.data);
-        });
-    }
-
-    const getAnnouncements = async () => {
-        setAnnouncements([]);
-
-        await Api.get('/announcements').then((res) => {
-            setAnnouncements(res.data.data);
-        });
-    }
-
+    // The request can finish after the user has left the page: `active` keeps the reply
+    // from updating a component that is no longer on screen.
     useEffect(()=>{
-        getCategories();
+        let active = true;
+        Api.get('/categories').then((res) => {
+            if(active) setCategories(res.data);
+        }).catch(() => {});
+        return () => { active = false; };
     }, [])
 
     useEffect(()=> {
+        let active = true;
+
+        const getAnnouncements = async () => {
+            setAnnouncements([]);
+            setLoadError(false);
+            setLoading(true);
+
+            try {
+                let res;
+                if(mine) {
+                    const user = await Api.get(`/user?token=${token}`);
+                    res = await Api.get(`/announcements/${user.data.data.id}?token=${token}`);
+                } else if(query) {
+                    res = await Api.get('/search', { params: { q: query } });
+                } else {
+                    res = await Api.get('/announcements');
+                }
+                if(active) setAnnouncements(res.data.data || []);
+            } catch (e) {
+                // API down, or refusing requests (rate limit): say so instead of an empty page
+                if(active) setLoadError(true);
+            }
+            if(active) setLoading(false);
+        }
+
         getAnnouncements();
-    }, [])
+        return () => { active = false; };
+    }, [query, mine, token])
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -181,7 +204,14 @@ export default () => {
         </S.PromoArea>
 
         <S.Announcements>
-                <S.Title>Anúncios recentes</S.Title>
+                <S.Title>{mine ? 'Meus anúncios' : query ? `Resultados para "${query}"` : 'Anúncios recentes'}</S.Title>
+
+                {loadError &&
+                    <S.Notice>Não foi possível carregar os anúncios. Tente de novo em instantes.</S.Notice>
+                }
+                {!loading && !loadError && announcements.length === 0 &&
+                    <S.Notice>{mine ? 'Você ainda não tem anúncios.' : query ? 'Nenhum anúncio encontrado para essa busca.' : 'Nenhum anúncio por aqui ainda.'}</S.Notice>
+                }
 
 
             <S.AnnouncementsArea>

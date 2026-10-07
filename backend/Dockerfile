@@ -3,7 +3,10 @@ FROM php:7.4-cli
 RUN rm -f /etc/apt/sources.list.d/* \
     && echo 'deb http://archive.debian.org/debian bullseye main' > /etc/apt/sources.list \
     && apt-get -o Acquire::Check-Valid-Until=false update && apt-get install -y \
-    git unzip libzip-dev libpng-dev libonig-dev libxml2-dev \
+    git unzip libzip-dev libpng-dev libjpeg-dev libonig-dev libxml2-dev \
+    # GD only gets JPEG support when configured for it; without this the cover upload
+    # (Intervention saves every cover as .jpg) dies with "undefined function imagejpeg()".
+    && docker-php-ext-configure gd --with-jpeg \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip xml opcache \
     && rm -rf /var/lib/apt/lists/*
 

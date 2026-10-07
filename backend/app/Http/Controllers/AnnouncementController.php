@@ -14,7 +14,7 @@ class AnnouncementController extends Controller
     private $loggedUser;
 
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['list', 'one']]);
+        $this->middleware('auth:api', ['except' => ['list', 'one', 'search']]);
 
         $this->loggedUser = auth()->user();
     }
@@ -79,6 +79,39 @@ class AnnouncementController extends Controller
         $array = ['error'=>''];
 
         $announcements = Announcement::orderBy('created_at', 'DESC')->get();
+
+        foreach($announcements as $akey => $avalue ) {
+            $announcements[$akey]['images'] = url('media/covers/'.$announcements[$akey]['images']);
+        }
+
+        $array['data'] = $announcements;
+
+        return $array;
+    }
+
+    public function mylist($id_user) {
+        $array = ['error'=>''];
+
+        $announcements = Announcement::where('id_user', $id_user)->orderBy('created_at', 'DESC')->get();
+
+        foreach($announcements as $akey => $avalue ) {
+            $announcements[$akey]['images'] = url('media/covers/'.$announcements[$akey]['images']);
+        }
+
+        $array['data'] = $announcements;
+
+        return $array;
+    }
+
+    public function search(Request $request) {
+        $array = ['error'=>''];
+
+        // % and _ typed by the user are literal characters, not wildcards
+        $term = '%'.addcslashes(trim($request->input('q', '')), '%_\\').'%';
+
+        $announcements = Announcement::where(function($query) use ($term) {
+            $query->where('title', 'LIKE', $term)->orWhere('description', 'LIKE', $term);
+        })->orderBy('created_at', 'DESC')->get();
 
         foreach($announcements as $akey => $avalue ) {
             $announcements[$akey]['images'] = url('media/covers/'.$announcements[$akey]['images']);

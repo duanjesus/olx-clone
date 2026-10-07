@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as S from './styled';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Logo from '../../assets/logoolx.png';
@@ -67,6 +67,13 @@ export default ({logged}) => {
     const name = useSelector(state => state.UserReducer.name);
     const dispatch = useDispatch();
     const history = useHistory();
+    const location = useLocation();
+    const [search, setSearch] = useState(new URLSearchParams(location.search).get('q') || '');
+
+    const handleSearch = () => {
+        const term = search.trim();
+        history.push(term ? `/?q=${encodeURIComponent(term)}` : '/');
+    }
 
     const handleLogout = () => {
         Api.post(`auth/logout?token=${token}`).then((res) => {
@@ -90,18 +97,24 @@ export default ({logged}) => {
                         <S.Logo src={Logo} />
                     </Link>
                     <S.SearchWrapper>
-                        <S.SearchInput type="text" placeholder={'Buscar "Carro"'} />
+                        <S.SearchInput
+                            type="text"
+                            placeholder={'Buscar "Carro"'}
+                            value={search}
+                            onChange={e=>setSearch(e.target.value)}
+                            onKeyDown={e=>{ if(e.key === 'Enter') handleSearch(); }}
+                        />
                         <S.SearchDivider />
                         <S.LocationButton type="button">
                             <PinIcon /> RJ <ChevronDownIcon />
                         </S.LocationButton>
                         <S.SearchDivider />
-                        <S.SearchSubmit type="button" aria-label="Buscar"><SearchIcon /></S.SearchSubmit>
+                        <S.SearchSubmit type="button" aria-label="Buscar" onClick={handleSearch}><SearchIcon /></S.SearchSubmit>
                     </S.SearchWrapper>
                 </S.HeaderLeft>
                 <S.HeaderRight>
                     <Link to="/"><S.NavItem><BriefcaseIcon /> Plano Profissional</S.NavItem></Link>
-                    <Link to="/"><S.NavItem><GridIcon /> Meus Anúncios</S.NavItem></Link>
+                    <Link to={token ? '/?meus=1' : '/login'}><S.NavItem><GridIcon /> Meus Anúncios</S.NavItem></Link>
                     <Link to="/"><S.NavItem><ChatIcon /> Chat</S.NavItem></Link>
                     <Link to="/"><S.NavItem><BellIcon /> Notificações</S.NavItem></Link>
 

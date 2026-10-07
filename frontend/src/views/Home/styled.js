@@ -206,6 +206,12 @@ export const Title = styled.span`
     font-weight: 600;
 `;
 
+export const Notice = styled.p`
+    color: #4A4A4A;
+    font-size: 16px;
+    margin: 20px 0 0;
+`;
+
 export const AnnouncementsArea = styled.div`
    display: grid;
    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));

@@ -43,7 +43,8 @@ export default () => {
             fd.append('category', category);
             fd.append('price', price);
             fd.append('zipcode', zipcode);
-            fd.append('cover', cover, cover.name);
+            // The cover is optional: without one the API uses its default image
+            if(cover) fd.append('cover', cover, cover.name);
             
             await Api.post(`/announcement?token=${token}`, fd, {
                 onUploadProgress: ProgressEvent => {
@@ -51,11 +52,14 @@ export default () => {
                 }
             })
             .then((res) => {
-                console.log(res);
+                if(res.data.error) {
+                    alert(res.data.error)
+                    return;
+                }
                 alert('Anuncio cadastrado')
                 history.push('/')
-            }).catch((res) => {
-                console.log(res)            
+            }).catch(() => {
+                alert('Não foi possível cadastrar o anúncio. Tente de novo em instantes.')
             })
         } else {
             alert('Preencha todos os campos')
