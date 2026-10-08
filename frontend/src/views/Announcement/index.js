@@ -35,16 +35,21 @@ export default () => {
     const [activeImage, setActiveImage] = useState(null);
 
     useEffect(()=> {
+        // Same guard as the other pages: the reply may arrive after the user moved on
+        // (or opened another announcement, which must not be overwritten by the old one).
+        let active = true;
         const getAnnouncement = async () => {
             setAnnouncement({});
             setActiveImage(null);
             await Api.get(`/announcement/${id}`).then((res) => {
+                if(!active) return;
                 setAnnouncement(res.data.data);
                 const gallery = res.data.data.gallery;
                 setActiveImage(gallery && gallery.length ? gallery[0] : res.data.data.images);
             });
         }
         getAnnouncement();
+        return () => { active = false; };
     }, [id]);
 
     const gallery = announcement.gallery && announcement.gallery.length ? announcement.gallery : [announcement.images].filter(Boolean);

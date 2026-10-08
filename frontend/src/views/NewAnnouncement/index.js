@@ -21,14 +21,14 @@ export default () => {
     const [cover, setCover] = useState();
 
 
+    // The request can finish after the user has left the page: `active` keeps the reply
+    // from updating a component that is no longer on screen.
     useEffect(()=> {
-        const getCategories = async () => {
-           await Api.get('/categories').then((res) => {
-                console.log(res.data);
-                setCategories(res.data);
-            })
-        }
-        getCategories();
+        let active = true;
+        Api.get('/categories').then((res) => {
+            if(active) setCategories(res.data);
+        }).catch(() => {});
+        return () => { active = false; };
     }, [])
 
     useEffect(() => {
